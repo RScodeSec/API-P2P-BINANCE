@@ -20,4 +20,6 @@ const main = async () => {
   console.log(`Result Evaluation \n ${resultMinPrice} `);
 };
 
-setInterval(main(), 60000);
+setInterval(() => {
+  main();
+}, 60000);
