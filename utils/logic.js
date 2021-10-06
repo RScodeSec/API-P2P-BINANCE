@@ -12,10 +12,7 @@ const minPrice = (prices = []) => {
   let min = Math.min(...priceNumber);
   addHistoryPrice(min);
 
-  //globalPrice.push(min);
-
-  console.log(priceNumber);
-  // console.log(globalPrice);
+  //console.log(priceNumber);
   return min;
 };
 
@@ -23,12 +20,30 @@ const addHistoryPrice = (price) => {
   if (globalPrice.includes(price)) {
     return;
   }
-  globalPrice = globalPrice.slice(0, 5);
+  globalPrice = globalPrice.slice(0, 10);
   globalPrice.unshift(price);
 
   saveDB();
 };
 
+const evaluatePrice = (prices = [], price) => {
+  const copyPrices = [];
+
+  for (let i = 1; i < prices.length; i++) {
+    copyPrices.push(prices[i]);
+  }
+  const mypriceMin = Math.min(...copyPrices);
+  if (price <= mypriceMin) {
+    // return data;
+    //|| price <= price + 0.15
+    return true;
+  } else {
+    return false;
+  }
+};
+/*
+----------------Persistent Data----------
+*/
 const saveDB = () => {
   const payload = {
     prices: globalPrice,
@@ -45,11 +60,12 @@ const readDB = (() => {
   globalPrice = data.prices;
 })();
 
-const ggg = () => {
+const sendPricesArr = () => {
   return globalPrice;
 };
 
 module.exports = {
   minPrice,
-  ggg,
+  sendPricesArr,
+  evaluatePrice,
 };

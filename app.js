@@ -1,14 +1,20 @@
 require("dotenv").config();
 const Binance = require("./utils/fech");
-const { minPrice, ggg } = require("./utils/logic");
+const { minPrice, sendPricesArr, evaluatePrice } = require("./utils/logic");
 
 const main = async () => {
   const binance = new Binance();
   const result = await binance.getDataBinance();
 
   const priceOptimum = minPrice(result);
-  console.log(priceOptimum);
-  console.log(ggg());
+
+  //evaluate Min price
+  const pricesArr = sendPricesArr();
+  const resultMinPrice = evaluatePrice(pricesArr, priceOptimum);
+  console.log("---------------------------");
+  console.log(`arr de precios \n ${pricesArr} `);
+  console.log(`Min Price \n ${priceOptimum} `);
+  console.log(`Result Evaluation \n ${resultMinPrice} `);
 };
 
 main();
